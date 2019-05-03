@@ -1,0 +1,41 @@
+version: "3"
+services:
+
+  webserver:
+    image: nginx:1.15.12
+    configs:
+      - nginx
+    networks:
+      - frontend
+
+  webui:
+    build: ./platform
+    image: OpenIoT:latest
+    networks:
+      - frontend
+    configs:
+      - firebase
+
+  mqtt:
+    image: eclipse-mosquitto:1.6.1
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-logs:/mosquitto/log
+    configs:
+      - mqtt
+
+configs:
+  nginx:
+    file: nginx.conf
+  mqtt:
+    file: mosquitto.conf
+  firebase:
+    file: firebase.json
+
+volumes:
+  mosquitto-data:
+  mosquitto-logs:
+
+networks:
+  frontend:
+  backend:
