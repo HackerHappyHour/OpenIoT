@@ -1,20 +1,17 @@
 version: "3"
 services:
 
-  webserver:
-    image: nginx:1.15.12
+  openiot:
+    image: richarvey/nginx-php-fpm:1.7.1
     configs:
       - nginx
     networks:
       - frontend
-
-  webui:
-    build: ./platform
-    image: OpenIoT:latest
-    networks:
-      - frontend
-    configs:
-      - firebase
+	configs:
+      - nginx
+    volumes:
+	  - public:/var/www/html
+      
 
   mqtt:
     image: eclipse-mosquitto:1.6.1
