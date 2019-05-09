@@ -12,6 +12,8 @@ services:
       - 443:443
     networks:
       - frontend
+    volumes:
+      - letsencrypt-config:/config
     restart: unless-stopped
 
   openiot:
@@ -35,6 +37,7 @@ services:
       - mosquitto-logs:/mosquitto/log
 
 volumes:
+  letsencrypt-config:
   mosquitto-data:
   mosquitto-logs:
 
