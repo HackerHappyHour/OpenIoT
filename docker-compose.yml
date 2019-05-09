@@ -1,32 +1,38 @@
 version: '3'
 services:
 
-  openiot:
-    image: richarvey/nginx-php-fpm:1.7.1
-    configs:
-      - nginx
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    env_file:
+      - ./.env/letsencrypt.env
+    ports:
+      - 443:443
     networks:
       - frontend
-	configs:
-      - nginx
+    restart: unless-stopped
+
+  openiot:
+    image: richarvey/nginx-php-fpm:1.7.1
+    container_name: openiot
+    networks:
+      - frontend
+      - backend
+    env_file:
+      - ./.env/openiot.env
     volumes:
-	  - public:/var/www/html
+      - ./public:/var/www/html
+    ports:
+      - 8888
 
   mqtt:
     image: eclipse-mosquitto:1.6.1
+    container_name: mqtt
     volumes:
       - mosquitto-data:/mosquitto/data
       - mosquitto-logs:/mosquitto/log
-    configs:
-      - mqtt
-
-configs:
-  nginx:
-    file: nginx.conf
-  mqtt:
-    file: mosquitto.conf
-  firebase:
-    file: firebase.json
 
 volumes:
   mosquitto-data:
