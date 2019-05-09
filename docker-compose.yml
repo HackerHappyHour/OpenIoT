@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
 
   openiot:
@@ -11,7 +11,6 @@ services:
       - nginx
     volumes:
 	  - public:/var/www/html
-      
 
   mqtt:
     image: eclipse-mosquitto:1.6.1
