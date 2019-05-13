@@ -14,6 +14,7 @@ services:
       - proxy
     volumes:
       - letsencrypt-config:/config
+      - ./docker/proxy/openiot.subdomain.conf:/config/nginx/proxy-confs/openiot.subdomain.conf
       - certs:/etc/letsencrypt/live
     restart: unless-stopped
 
