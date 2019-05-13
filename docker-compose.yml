@@ -7,11 +7,11 @@ services:
     cap_add:
       - NET_ADMIN
     env_file:
-      - ./.env/letsencrypt.env
+      - ./env/letsencrypt.env
     ports:
       - 443:443
     networks:
-      - frontend
+      - proxy
     volumes:
       - letsencrypt-config:/config
     restart: unless-stopped
@@ -20,10 +20,10 @@ services:
     image: richarvey/nginx-php-fpm:1.7.1
     container_name: openiot
     networks:
-      - frontend
-      - backend
+      - proxy
+      - mqtt
     env_file:
-      - ./.env/openiot.env
+      - ./env/openiot.env
     volumes:
       - ./public:/var/www/html
     ports:
@@ -41,7 +41,8 @@ volumes:
   letsencrypt-config:
   mosquitto-data:
   mosquitto-logs:
+  certs:
 
 networks:
-  frontend:
-  backend:
+  proxy:
+  mqtt:
