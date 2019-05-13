@@ -30,7 +30,8 @@ services:
       - 8888
 
   mqtt:
-    image: eclipse-mosquitto:1.6.1
+    build:
+      context: ./docker/mqtt
     container_name: mqtt
     volumes:
       - mosquitto-data:/mosquitto/data
