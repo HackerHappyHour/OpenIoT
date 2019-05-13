@@ -14,6 +14,7 @@ services:
       - proxy
     volumes:
       - letsencrypt-config:/config
+      - certs:/etc/letsencrypt/live
     restart: unless-stopped
 
   openiot:
