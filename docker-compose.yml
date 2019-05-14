@@ -19,7 +19,9 @@ services:
     restart: unless-stopped
 
   openiot:
-    image: richarvey/nginx-php-fpm:1.7.1
+    build:
+      context: .
+      dockerfile: docker/openiot/Dockerfile
     container_name: openiot
     networks:
       - proxy
